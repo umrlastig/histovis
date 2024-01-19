@@ -29,12 +29,13 @@
   },
   "dependencies": {
     "buffer": "^6.0.3",
-    "itowns": "^2.21.0",
+    "dat.gui": "^0.7.9",
+    "itowns": "^2.41.0",
     "numeric": "^1.2.6",
     "photogrammetric-camera": "file:modules/photogrammetric-camera",
     "pixi": "file:modules/pixi",
     "proj4": "^2.10.0",
-    "three": "^0.115.0"
+    "three": "^0.154.0"
   },
   "directories": {
     "example": "examples"

@@ -21,7 +21,7 @@ function initGlobe(container, camera) {
     };
 
     view = new itowns.GlobeView(container, placement,
-        {handleCollision: false, disableSkirt: false, camera: camera});
+        {handleCollision: false, disableSkirt: false, camera: camera, renderer: { isWebGL2: false }});
     camera.zoom = params.cameras.zoom;
 
     // Controls
@@ -290,8 +290,8 @@ function fitCameraToSelection(camera, set, fitOffset = 1.) {
         camera.updateProjectionMatrix();
 
         var proj = camera.projectionMatrix.clone();
-        var world = camera.matrixWorld.clone();
-        var inverseWorld = new THREE.Matrix4().getInverse(world);
+        var world = new THREE.Matrix4().copy(camera.matrixWorld);
+        var inverseWorld = world.invert();
 
         var frustum = new THREE.Frustum();
         frustum.setFromProjectionMatrix(new THREE.Matrix4().multiplyMatrices(proj, inverseWorld));

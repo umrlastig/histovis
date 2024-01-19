@@ -14,8 +14,8 @@ const cover = new THREE.Color(0x2196F3);
 function updateCluster(camera) {
     // Camera information
     var proj = camera.projectionMatrix.clone();
-    var world = camera.matrixWorld.clone();
-    var inverseWorld = new THREE.Matrix4().getInverse(world);
+    var world = new THREE.Matrix4().copy(camera.matrixWorld);
+    var inverseWorld = world.invert();
 
     var frustum = new THREE.Frustum();
     frustum.setFromProjectionMatrix(new THREE.Matrix4().multiplyMatrices(proj, inverseWorld));

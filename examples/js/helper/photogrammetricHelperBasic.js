@@ -184,7 +184,7 @@ function cameraAspect(camera) {
 
 function cameraHelper(camera) {
     var group = new THREE.Group();
-    m = new THREE.Matrix4().getInverse(camera.projectionMatrix);
+    m = camera.projectionMatrix.clone().invert();
     var v = new Float32Array(15);
     // get the 4 corners on the near plane (neglecting distortion)
     new THREE.Vector3( -1, -1, -1 ).applyMatrix4(m).toArray(v,  3);
@@ -232,7 +232,7 @@ function cameraHelperBookmark(camera) {
     markerMaterials[camera.name] = new LineMaterial(markerMaterialUniforms);
     markerMaterials[camera.name].resolution.set(window.innerWidth, window.innerHeight);
 
-    m = new THREE.Matrix4().getInverse(camera.projectionMatrix);
+    m = camera.projectionMatrix.clone().invert();
     var v = new Float32Array(30);
 
     // target point
@@ -802,7 +802,7 @@ function getIntersectedObject(event) {
     // Equal to:
     //var direction = new THREE.vector3(mouse.x, mouse.y, 0.5).unproject(viewCamera).sub(origin).normalize();
     //this.applyMatrix4( camera.projectionMatrixInverse ).applyMatrix4( camera.matrixWorld );
-    var inverseProj = new THREE.Matrix4().getInverse(viewCamera.projectionMatrix);
+    var inverseProj = viewCamera.projectionMatrix.clone().invert();
     var world = viewCamera.matrixWorld.clone();
 
     var origin = viewCamera.position.clone();

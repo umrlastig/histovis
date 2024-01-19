@@ -18,7 +18,7 @@ class HistoricalImage {
 
         // Compute camera matrices manually
         // TODO fix bug related to inverse projection matrix
-        var inverseProj = new Matrix4().getInverse(camera.projectionMatrix.clone());
+        var inverseProj = camera.projectionMatrix.clone().invert();
         var world = camera.matrixWorld.clone();
         //Same as: new THREE.Vector3(  0,  0, -1).unproject(camera);
         var origin = camera.position.clone();

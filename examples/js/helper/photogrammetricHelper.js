@@ -214,14 +214,14 @@ function makeLUTTexture(filter, size, url) {
 
 /* Environment --------------------------------------- */
 function initBackgroundSphere(material) {
-    var sphere = new THREE.SphereBufferGeometry(-1, 32, 32);
+    var sphere = new THREE.SphereGeometry(-1, 32, 32);
     var visibility = new Float32Array(sphere.attributes.position.count); // invisible
     sphere.setAttribute('visibility', new THREE.BufferAttribute(visibility, 1));
     return new THREE.Mesh(sphere, material);
 }
 
 function initWorldPlane(material) {
-    var plane = new THREE.PlaneBufferGeometry(-1, -1, 100, 100);
+    var plane = new THREE.PlaneGeometry(-1, -1, 100, 100);
     var visibility = new Float32Array(plane.attributes.position.count); // invisible
     plane.setAttribute('visibility', new THREE.BufferAttribute(visibility, 1));
     return new THREE.Mesh(plane, material);
@@ -242,7 +242,7 @@ function cameraHelper(camera) {
     markerMaterials[camera.name] = new LineMaterial(markerMaterialUniforms);
     markerMaterials[camera.name].resolution.set(window.innerWidth, window.innerHeight);
 
-    m = new THREE.Matrix4().getInverse(camera.projectionMatrix);
+    m = camera.projectionMatrix.clone().invert();
     var v = new Float32Array(30);
 
     // target point
@@ -529,7 +529,7 @@ function getIntersectedObject(event) {
     // Equal to:
     //var direction = new THREE.vector3(mouse.x, mouse.y, 0.5).unproject(viewCamera).sub(origin).normalize();
     //this.applyMatrix4( camera.projectionMatrixInverse ).applyMatrix4( camera.matrixWorld );
-    var inverseProj = new THREE.Matrix4().getInverse(viewCamera.projectionMatrix);
+    var inverseProj = viewCamera.projectionMatrix.clone().invert();
     var world = viewCamera.matrixWorld.clone();
 
     var origin = viewCamera.position.clone();
