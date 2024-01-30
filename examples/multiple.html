@@ -45,21 +45,18 @@
         <div id="myTimeline" class = "w3-display-container"></div>
 
         <!-- Rendering -->
-        <script src="../dist/itowns.js"></script>
+        <script src="../dist/histovis.js"></script>
         <script>
             // Itowns library
             var itowns = histovis.itowns;
         </script>
 
-        <script src="../dist/three.js"></script>
         <script>
             // Three library
             var THREE = histovis.THREE;
             // Data GUI
             var GUI = histovis.GUI;
         </script>
-
-        <script src="../dist/three-additional.js"></script>
         <script>
             // Three additional
             var PLYLoader = histovis.PLYLoader;
@@ -73,7 +70,6 @@
             var spriteFS = histovis.spriteFS;
         </script>
 
-        <script src="../dist/photogrammetric-camera.js"></script>
         <script>
             // Files Management
             var FetchSource = histovis.photogrammetricCamera.FetchSource;
@@ -93,7 +89,6 @@
             var PhotogrammetricCamera = histovis.photogrammetricCamera.PhotogrammetricCamera;
         </script>
 
-        <script src="../dist/cluster.js"></script>
         <script>
             // Clustering
             var HistoricalImage = histovis.HistoricalImage;
@@ -141,7 +136,7 @@
                 scene = view.scene;
                 //scene.background = new THREE.Color(0xf0f0f0);
 
-                // Cameras 
+                // Cameras
                 cameras = new THREE.Group();
                 cameras.visible = params.cameras.visible;
                 scene.add(viewCamera);
@@ -154,13 +149,13 @@
                         return res;
                     }
                 });
-                
+
                 // Materials
                 basicMaterial = initBasicMaterial();
                 wireMaterial = initWireMaterial();
                 [multipleTextureMaterialUniforms, multipleTextureMaterial] = initMultipleTextureMaterial(
                     multipleVS, multipleFS, uvTexture, view.mainLoop.gfxEngine.renderer);
-                
+
                 spriteMaterialUniforms = initSpriteMaterialUniforms(spriteTexture, spriteVS, spriteFS);
                 markerMaterialUniforms = initMarkerMaterialUniforms(lineVS, lineFS);
 
@@ -188,7 +183,7 @@
 
                 // Show the materials
                 showMaterials(true);
-                
+
                 // Raycaster and mouse
                 raycaster = new THREE.Raycaster();
                 raycaster.params.Line.threshold = 3;
@@ -335,7 +330,7 @@
 
                 // Event listeners
                 view.domElement.addEventListener('keydown', onDocumentKeyDown, false);
-                
+
                 window.addEventListener('resize', function() {
                     var canvas = renderer.domElement;
                     border = new Border(canvas.width, canvas.height);
@@ -387,7 +382,7 @@
                             }
                         });
                     });
-                    
+
                     var check = collectionsGUI.add(collections[key], 'selection').name(key).onChange(function (value) {
                         if(value == true) collections[key].load();
                         else collections[key].unload();
@@ -417,8 +412,8 @@
                     }
                 }
 
-                var viewGUI = gui.addFolder('View Camera'); 
-                viewGUI.controls = viewGUI.add(params.mouse, 'control', {globe: 0, person: 1}).onChange(updateControlFromGUI); 
+                var viewGUI = gui.addFolder('View Camera');
+                viewGUI.controls = viewGUI.add(params.mouse, 'control', {globe: 0, person: 1}).onChange(updateControlFromGUI);
                 viewGUI.zoom = viewGUI.add(viewCamera, 'zoom', 0.1, 2.0).onChange(updateViewCameraFromGUI);
                 const minMaxView = new MinMaxGUIHelper(viewCamera, 'near', 'far', 0.1);
                 viewGUI.near = viewGUI.add(minMaxView, 'min', 0.1, 30, 0.1).name('near').onChange(updateViewCameraFromGUI);
@@ -578,7 +573,7 @@
                 colorGUI.scene = colorGUI.addColor(params.scene, 'color').name('abstract').onChange(updateSceneAbstractFromGUI);
                 colorGUI.building = colorGUI.addColor(params.scene, 'building').name('buildings').onChange(updateSceneBuildingFromGUI);
 
-                // Background 
+                // Background
                 function updateElevationFromGUI(value) {
                     params.environment.elevation = value;
                     if(globeRendering) updateEnvironmentGlobe();
@@ -627,7 +622,7 @@
                     if (name.length > 0) {
                         if(name.length > 20) name = name.substr(0,8)+'[..]'+name.substr(-8,8);
                         textureGUI.name = params.collection.overview ? 'Historical Cameras ' : 'Hist: ' + name;
-                    }   
+                    }
                 }
 
                 return gui;
@@ -682,7 +677,7 @@
                     if(prevCamera.timestamp !== undefined && timestamp > nextCamera.timestamp) {
                         var info = document.getElementById("info");
                         if(params.collection.overview) info.innerHTML = ' ';
-                        else info.innerHTML = '<li>Name: '+ textureCamera.name 
+                        else info.innerHTML = '<li>Name: '+ textureCamera.name
                             + '</li><li>Date:' + dates[textureCamera.name].year + '</li>';
                     }
 

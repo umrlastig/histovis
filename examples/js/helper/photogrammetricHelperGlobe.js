@@ -14,18 +14,19 @@ cameraTarget.matrixWorldInverse = new THREE.Matrix4();
 /* Environment --------------------------------------- */
 function initGlobe(container, camera) {
     var initialPos = { longitude: 2.351323, latitude: 48.856712, altitude: 10000000 };
-    
+
     var placement = {
         coord: new itowns.Coordinates('EPSG:4326',  initialPos.longitude , initialPos.latitude),
         range: initialPos.altitude
     };
 
-    view = new itowns.GlobeView(container, placement, 
-        {handleCollision: false, disableSkirt: false, noControls: true, camera: camera});
+    view = new itowns.GlobeView(container, placement,
+        {handleCollision: false, disableSkirt: false, camera: camera});
     camera.zoom = params.cameras.zoom;
 
     // Controls
-    controls = new itowns.GlobeControls(view, placement);
+    // controls = new itowns.GlobeControls(view, placement);
+    controls = view.control;
     //controls = new itowns.FirstPersonControls(view);
 
     // Add color layers

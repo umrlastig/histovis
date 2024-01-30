@@ -1,4 +1,5 @@
-import * as itowns from 'itowns/dist/itowns';
+import * as itowns from 'itowns';
+import * as THREE from 'three';
 
 function parseNumber(json, tagName){
     return parseFloat(json[tagName]);
@@ -10,7 +11,7 @@ function wrapTo180(angle) {
 
 function parseIntrinsics(json){
     var fov = parseNumber(json, 'fov');
-    var size = new itowns.THREE.Vector2(json['size'][0], json['size'][1]);
+    var size = new THREE.Vector2(json['size'][0], json['size'][1]);
     var focal = 0.5 * size.y / Math.tan(fov * Math.PI / 360);
     var point = size.clone().multiplyScalar(0.5);
     var skew = 0;
@@ -24,7 +25,7 @@ function parseIntrinsics(json){
 
 function parseExtrinsics(json){
 
-    var M = new itowns.THREE.Matrix4();
+    var M = new THREE.Matrix4();
     const degree = Math.PI / 180;
 
     var measurements = {
@@ -36,7 +37,7 @@ function parseExtrinsics(json){
         elevation: parseNumber(json, 'elev')+3.8
     };
 
-    var MatbB = new itowns.THREE.Matrix4();
+    var MatbB = new THREE.Matrix4();
     MatbB.set(
         0, 1, 0, 0,
         1, 0, 0, 0,
@@ -44,9 +45,9 @@ function parseExtrinsics(json){
         0, 0, 0, 1);
 
     // Rotation matrix of heading+tilt+roll
-    var Rz = new itowns.THREE.Matrix4();
-    var Ry = new itowns.THREE.Matrix4();
-    var Rx = new itowns.THREE.Matrix4();
+    var Rz = new THREE.Matrix4();
+    var Ry = new THREE.Matrix4();
+    var Rx = new THREE.Matrix4();
     // Rz=[cos(Y) -sin(Y) 0; sin(Y) cos(Y) 0; 0 0 1];
     Rz.makeRotationZ(measurements.heading*degree);
     // Ry=[cos(P) 0 sin(P); 0 1 0; -sin(P) 0 cos(P)];
