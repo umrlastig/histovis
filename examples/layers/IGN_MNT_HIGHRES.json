@@ -13,7 +13,6 @@
 	"source": {
 		"url":        "https://wxs.ign.fr/altimetrie/geoportail/wmts",
         "crs": "EPSG:4326",
-        "projection": "EPSG:4326",
 		"format": "image/x-bil;bits=32",
 		"attribution" : {
 			"name":"IGN",
