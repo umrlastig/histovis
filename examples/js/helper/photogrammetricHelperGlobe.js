@@ -21,7 +21,7 @@ function initGlobe(container, camera) {
     };
 
     view = new itowns.GlobeView(container, placement,
-        {handleCollision: false, disableSkirt: false, camera: { cameraThree: camera }, renderer: { isWebGL2: false }});
+        {handleCollision: false, disableSkirt: false, camera: { cameraThree: camera }});
     camera.zoom = params.cameras.zoom;
 
     // Controls
