@@ -1,7 +1,8 @@
 {
     "id":   "Ortho",
     "source": {
-        "url": "https://wxs.ign.fr/3ht7xcw6f7nciopo16etuqp2/geoportail/wmts",
+        "url": "https://wxs.ign.fr/decouverte/geoportail/wmts",
+        "crs": "EPSG:3857",
         "projection": "EPSG:3857",
         "networkOptions": {
             "crossOrigin": "anonymous"
@@ -111,22 +112,16 @@
                 "maxTileCol": 126683
             },
             "18": {
-                "minTileRow": 87651,
-                "maxTileRow": 148105,
-                "minTileCol": 1320,
-                "maxTileCol": 253366
+                "minTileRow": 87648,
+                "maxTileRow": 148111,
+                "minTileCol": 1312,
+                "maxTileCol": 253375
             },
             "19": {
                 "minTileRow": 175296,
                 "maxTileRow": 294063,
                 "minTileCol": 170144,
                 "maxTileCol": 343487
-            },
-            "20": {
-                "minTileRow": 357008,
-                "maxTileRow": 384687,
-                "minTileCol": 524400,
-                "maxTileCol": 540927
             }
         }
     }

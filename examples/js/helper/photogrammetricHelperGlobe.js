@@ -34,8 +34,8 @@ function initGlobe(container, camera) {
     itowns.Fetcher.json('layers/DARK.json').then(addColorLayerFromConfig);
     itowns.Fetcher.json('layers/Cada.json').then(addColorLayerFromConfig);
     // Add elevation layers
-    itowns.Fetcher.json('layers/WORLD_DTM.json').then(addElevationLayerFromConfig);
     itowns.Fetcher.json('layers/IGN_MNT_HIGHRES.json').then(addElevationLayerFromConfig);
+    itowns.Fetcher.json('layers/WORLD_DTM.json').then(addElevationLayerFromConfig);
 
     function addColorLayerFromConfig(config) {
         config.source = new itowns.WMTSSource(config.source);
