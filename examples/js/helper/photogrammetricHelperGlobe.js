@@ -21,7 +21,7 @@ function initGlobe(container, camera) {
     };
 
     view = new itowns.GlobeView(container, placement,
-        {handleCollision: false, disableSkirt: false, camera: camera, renderer: { isWebGL2: false }});
+        {handleCollision: false, disableSkirt: false, camera: { cameraThree: camera }, renderer: { isWebGL2: false }});
     camera.zoom = params.cameras.zoom;
 
     // Controls
@@ -58,31 +58,13 @@ function initGlobe(container, camera) {
 function initBuildings(material) {  
     var color = new THREE.Color();
     var tile;
-
-    scaler = function update(/* dt */) {
-        var i;
-        var building;
-        if (buildings.length) {
-            view.notifyChange(view.camera.camera3D, true);
-        }
-        for (i = 0; i < buildings.length; i++) {
-            building = buildings[i];
-            if (building) {
-                building.scale.z = Math.min(
-                    1.0, building.scale.z + 0.1);
-                building.updateMatrixWorld(true);
-            }
-        }
-        buildings = buildings.filter(function filter(m) { return m.scale.z < 1; });
-    };
-
-    view.addFrameRequester(itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, scaler);
-
+    /*
     var wfsBuildingSource = new itowns.WFSSource({
-        url: 'https://wxs.ign.fr/3ht7xcw6f7nciopo16etuqp2/geoportail/wfs?',
+        url: 'https://wxs.ign.fr/topographie/geoportail/wfs?',
         version: '2.0.0',
-        typeName: 'BDTOPO_BDD_WLD_WGS84G:bati_remarquable,BDTOPO_BDD_WLD_WGS84G:bati_indifferencie,BDTOPO_BDD_WLD_WGS84G:bati_industriel',
-        projection: 'EPSG:4326',
+        // typeName: 'BDTOPO_BDD_WLD_WGS84G:bati_remarquable,BDTOPO_BDD_WLD_WGS84G:bati_indifferencie,BDTOPO_BDD_WLD_WGS84G:bati_industriel',
+        typeName: 'BDTOPO_V3:batiment',
+        crs: 'EPSG:4326',
         ipr: 'IGN',
         format: 'application/json',
         zoom: { min: 15, max: 15 },
@@ -113,22 +95,22 @@ function initBuildings(material) {
     });
     // Change opacity so the layer mantains the material transparent
     wfsBuildingLayer.opacity = 0.99;
-
     view.addLayer(wfsBuildingLayer);
 
-    /* Environment Management ---------------------------- */
+    */
+
+        /* Environment Management ---------------------------- */
     function colorBuildings(properties) {
         //if (properties.id.indexOf('bati_remarquable') === 0) {
         //    return color.set(0x5555ff);
         //} else if (properties.id.indexOf('bati_industriel') === 0) {
         //    return color.set(0xff5555);
         //}
-        return new itowns.THREE.Color(params.scene.building);
-        //return color.set(0xe91e63);
+        return new THREE.Color(params.scene.building);
     }
 
     function altitudeBuildings(properties) {
-        return properties.z_min - properties.hauteur;
+        return properties.altitude_minimale_sol;
     }
 
     function extrudeBuildings(properties) {
@@ -138,6 +120,52 @@ function initBuildings(material) {
     function acceptFeature(properties) {
         return !!properties.hauteur;
     }
+
+    const wfsBuildingSource = new itowns.WFSSource({
+        url: 'https://data.geopf.fr/wfs/ows?',
+        version: '2.0.0',
+        typeName: 'BDTOPO_V3:batiment',
+        crs: 'EPSG:4326',
+        ipr: 'IGN',
+        format: 'application/json',
+    });
+
+    // bug dans itowns : ne retourne pas le mesh created mais le groupe
+    const getGeometry = (obj) => {
+        if (obj.geometry) {
+            return obj;
+        } else if (obj.children[0]) {
+            return getGeometry(obj.children[0]);
+        }
+    }
+
+    const wfsBuildingLayer = new itowns.FeatureGeometryLayer('WFS Building',{
+        batchId: function (property, featureId) { return featureId; },
+        onMeshCreated: (group) => {
+            const building = getGeometry(group);
+            if (building) {
+                const geometry = building.geometry;
+                const visibility = new Float32Array(Array(geometry.attributes.position.count).fill(1.));
+                geometry.setAttribute('visibility', new THREE.BufferAttribute(visibility, 1));
+                building.material = material;
+            }
+        },
+        filter: acceptFeature,
+        source: wfsBuildingSource,
+        zoom: { min: 14 },
+
+        style: {
+            fill: {
+                color: colorBuildings,
+                base_altitude: altitudeBuildings,
+                extrusion_height: extrudeBuildings,
+            }
+        }
+    });
+    view.addLayer(wfsBuildingLayer);
+
+    wfsBuildingLayer.opacity = 0.99;
+
 }
 
 /* Loading ------------------------------------------- */
