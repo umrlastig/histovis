@@ -461,7 +461,8 @@
                 // Footprint
                 function updateFootprintBorderFromGUI(value) {
                     params.cameras.linewidth = value;
-                    multipleTextureMaterial.border.forEach(b => b.linewidth = value);
+                    // multipleTextureMaterial.border.forEach(b => b.linewidth = value);
+                    multipleTextureMaterial.border.linewidth = value;
                     view.notifyChange(true);
                 }
 
