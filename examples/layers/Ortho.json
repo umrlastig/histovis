@@ -1,9 +1,8 @@
 {
     "id":   "Ortho",
     "source": {
-        "url": "https://wxs.ign.fr/decouverte/geoportail/wmts",
+        "url": "https://data.geopf.fr/wmts?",
         "crs": "EPSG:3857",
-        "projection": "EPSG:3857",
         "networkOptions": {
             "crossOrigin": "anonymous"
         },
@@ -122,6 +121,18 @@
                 "maxTileRow": 294063,
                 "minTileCol": 170144,
                 "maxTileCol": 343487
+            },
+            "20": {
+                "minTileRow": 357008,
+                "maxTileRow": 384687,
+                "minTileCol": 524400,
+                "maxTileCol": 540927
+            },
+            "21": {
+                "minTileRow": 714032,
+                "maxTileRow": 768783,
+                "minTileCol": 1048816,
+                "maxTileCol": 1081775
             }
         }
     }

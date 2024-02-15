@@ -1,11 +1,11 @@
 {
     "id": "OPENSM",
     "source": {
-        "projection": "EPSG:3857",
+        "crs": "EPSG:3857",
         "isInverted": true,
+        "name": "OPENSM",
         "format": "image/png",
         "url": "http://osm.oslandia.io/styles/klokantech-basic/${z}/${x}/${y}.png",
-        "name": "OPENSM",
         "attribution": {
             "name":"OpenStreetMap",
             "url": "http://www.openstreetmap.org/"
