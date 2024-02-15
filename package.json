@@ -28,13 +28,16 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "@babel/runtime": "^7.23.9",
     "buffer": "^6.0.3",
     "dat.gui": "^0.7.9",
-    "itowns": "^2.41.0",
+    "itowns": "^2.42.0",
     "numeric": "^1.2.6",
-    "photogrammetric-camera": "file:modules/photogrammetric-camera",
-    "proj4": "^2.10.0",
-    "three": "^0.154.0"
+    "photogrammetric-camera": "file:modules/photogrammetric-camera"
+  },
+  "peerDependencies": {
+    "proj4": "^2.9.2",
+    "three": "^0.159.0"
   },
   "directories": {
     "example": "examples"
