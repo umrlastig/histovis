@@ -25,8 +25,7 @@ function initGlobe(container, camera) {
     camera.zoom = params.cameras.zoom;
 
     // Controls
-    // controls = new itowns.GlobeControls(view, placement);
-    controls = view.control;
+    controls = new itowns.GlobeControls(view, placement);
     //controls = new itowns.FirstPersonControls(view);
 
     // Add color layers
