@@ -50,7 +50,7 @@ void main() {
 	gl_FragColor = vec4( outgoingLight, diffuseColor.a );
 
 	#include <tonemapping_fragment>
-	#include <encodings_fragment>
+	#include <colorspace_fragment>
 	#include <fog_fragment>
 }
 `;
