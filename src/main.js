@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import * as itowns from 'itowns';
 import * as dat from 'dat.gui';
 import proj4 from 'proj4';
@@ -18,7 +17,6 @@ const GUI = dat.GUI;
 export { GUI };
 
 export { itowns };
-export { THREE };
 
 export { photogrammetricCamera };
 export { default as GoogleOrientationParser } from './parsers/GoogleOrientationParser';
