@@ -17,21 +17,21 @@ module.exports = {
         libraryTarget: 'umd',
         // umdNamedDefine: true,
     },
-        plugins: [
+    plugins: [
 
-            // Prevent the generation of module fs for import on copc dependency
-            // See https://webpack.js.org/plugins/ignore-plugin/
-            new webpack.IgnorePlugin({
-                resourceRegExp: /^fs$/,
-                contextRegExp: /copc/,
-            }),
-        ],
-  devServer: {
+        // Prevent the generation of module fs for import on copc dependency
+        // See https://webpack.js.org/plugins/ignore-plugin/
+        new webpack.IgnorePlugin({
+            resourceRegExp: /^fs$/,
+            contextRegExp: /copc/,
+        }),
+    ],
+    devServer: {
     devMiddleware: {
         publicPath: '/dist/',
     },
     static: {
         directory: path.resolve(__dirname, './examples')
     },
-  },
+    },
 };
