@@ -553,7 +553,7 @@ function loadOrientation(url, source, name) {
     if(year) dates[name] = getDate(parseInt(year[0]));
 
     return source.open(url, 'text')
-        .then(parseOrientation(source))
+        .then(parseOrientation(source, name))
         .then(handleOrientation(name));
 }
 
@@ -584,7 +584,7 @@ function loadOrientedImage(orientationUrl, imageUrl, source, name) {
 function loadOrientedImageGroup(json, image, source, name) {
     json.name = name;
     loadImage(image, source)
-    .then(parseOrientation(json))
+    .then(parseOrientation(json, name))
     .then(handleOrientation(name));
 }
 
@@ -667,11 +667,11 @@ function loadNSJSON(path, file) {
 }
 
 /* Parsing ------------------------------------------- */
-function parseOrientation(source) {
+function parseOrientation(source, name) {
     var parsers = [MicmacOrientationParser, MatisOrientationParser, GoogleOrientationParser];
     return (data) => {
         for(const parser of parsers) {
-            var parsed = parser.parse(data, source);
+            var parsed = parser.parse(data, source, name);
             if (parsed) return parsed;
         }
         return undefined;

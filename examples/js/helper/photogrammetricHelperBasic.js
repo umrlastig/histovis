@@ -413,7 +413,7 @@ function loadOrientation(url, source, name) {
         name = match ? match[1] : url;
     }
     return source.open(url, 'text')
-        .then(parseOrientation(source))
+        .then(parseOrientation(source, name))
         .then(handleOrientation(name));
 }
 
@@ -492,11 +492,11 @@ function loadJSON(material, envFunction, path, file) {
 }
 
 /* Parsing ------------------------------------------- */
-function parseOrientation(source) {
+function parseOrientation(source, name) {
     var parsers = [MicmacOrientationParser, MatisOrientationParser];
     return (data) => {
         for(const parser of parsers) {
-            var parsed = parser.parse(data, source);
+            var parsed = parser.parse(data, source, name);
             if (parsed) return parsed;
         }
         return undefined;

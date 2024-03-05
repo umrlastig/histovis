@@ -26,6 +26,14 @@ module.exports = {
             contextRegExp: /copc/,
         }),
     ],
+    module: {
+        rules: [
+            {
+                test: /\.glsl$/,
+                loader: 'webpack-glsl-loader'
+            }
+        ]
+    },
     devServer: {
     devMiddleware: {
         publicPath: '/dist/',
